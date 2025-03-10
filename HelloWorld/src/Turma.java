@@ -5,7 +5,7 @@ class Turma{
     private Aluno[] alunos;
     private int qtdadeAlunos;
 
-    public Turma(int nro,String nomeProf,int vagas){
+    public Turma(int nro, String nomeProf, int vagas){
         if (nro<=0 || nomeProf.length() < 2 || vagas <=0){
             throw new IllegalArgumentException("Valor inválido");
         }
@@ -15,12 +15,33 @@ class Turma{
         this.alunos = new Aluno[vagas];
         this.qtdadeAlunos = 0;
     }
+
     public void novoAluno(Aluno aluno){
         if (qtdadeAlunos == vagas){
             throw new IllegalStateException("Turma cheia!");
         }
         alunos[qtdadeAlunos] = aluno;
         qtdadeAlunos++;
+    }
+
+
+    // encontrar aluno pela matricula
+    public Aluno getAluno(int matricula){
+        for(int i = 0; i < qtdadeAlunos; i++){
+            if(alunos[i].getMatricula() == matricula){
+                return alunos[i];
+            }
+        } return null;
+    }
+
+    public void informaNota(int matricula, int nroNota, float nota){
+        Aluno tmp = getAluno(matricula);
+        if (tmp == null){
+            throw new IllegalArgumentException("Matricula Inválida!");
+        }
+        else{
+            tmp.setNota(nroNota, nota);
+        }
     }
 
 }

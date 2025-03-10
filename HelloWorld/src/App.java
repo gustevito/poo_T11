@@ -18,5 +18,14 @@ public class App {
         Turma t = new Turma(10,"Pato Donald",10);
         t.novoAluno(a);
         t.novoAluno(new Aluno(1022,"Luizinho Pato"));
+
+
+        Aluno x = t.getAluno(1022);
+        System.out.println(x.toString());
+        x.setNota(1, 5);
+
+        t.informaNota(1022, 1, 5);
+        t.informaNota(1022, 2, 5);
+        t.informaNota(1022, 3, 5);
     }
 }
