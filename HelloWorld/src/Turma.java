@@ -44,4 +44,31 @@ class Turma{
         }
     }
 
+
+    // get todos os alunos
+    public Aluno[] getTodosAlunos(){
+        return this.alunos;
+    }
+
+    public Aluno[] aprovados(){
+        Aluno[] listaAprovados = new Aluno[this.qtdadeAlunos];
+        int contAprovados = 0;
+        int pos = 0;
+
+        for(int i=0; i < this.qtdadeAlunos; i++){
+            if (alunos[i].notasValidas() == true && alunos[i].aprovado()){
+                contAprovados++;
+            }
+        }
+
+        listaAprovados = new Aluno[contAprovados];
+
+        for(int i=0; i < this.qtdadeAlunos; i++){
+            if (alunos[i].notasValidas() == true && alunos[i].aprovado()){
+                listaAprovados[pos] = alunos[i];
+                pos++;
+            }
+        }
+        return listaAprovados;
+    }
 }

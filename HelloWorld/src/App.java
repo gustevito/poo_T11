@@ -25,7 +25,15 @@ public class App {
         x.setNota(1, 5);
 
         t.informaNota(1022, 1, 5);
-        t.informaNota(1022, 2, 5);
-        t.informaNota(1022, 3, 5);
+        t.informaNota(1022, 2, 8);
+        t.informaNota(1022, 3, 10);
+
+        t.informaNota(1023, 1, 10);
+
+
+        Aluno[] aprovados = t.aprovados();
+        for(int i = 0; i < aprovados.length; i++){
+            // finaliza isso dps
+        }
     }
 }
