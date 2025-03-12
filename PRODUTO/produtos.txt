@@ -8,3 +8,4 @@
 7,"Multiprocessador",349.90
 8,"Cafeteira cafe expresso",500.34
 9,"Sanduicheira",75.91
+10,":D", 1234.56
