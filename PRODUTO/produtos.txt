@@ -1,0 +1,10 @@
+0,"Smart TV 50 pol", 2370.57
+1,"Geladeira Frost Free",4084.05
+2,"Smartphone ACME",1799.10
+3,"Lava louça",2056,63
+4,"Lava roupas",2199.25
+5,"Freezer Horizontal",1662.49
+6,"Liquidificador",94.90
+7,"Multiprocessador",349.90
+8,"Cafeteira cafe expresso",500.34
+9,"Sanduicheira",75.91
