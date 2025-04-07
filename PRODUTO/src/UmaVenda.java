@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 
 // Note que UmaVenda é uma classe imutável
 public class UmaVenda{
-    private int codigoProduto;
+    private Produto produto;
     private double precoUnitario;
     private int quantidade;
     private double desconto; 
@@ -12,9 +12,9 @@ public class UmaVenda{
 
     private static final DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy:HH:mm");
     
-    public UmaVenda(int codigoProduto, double precoUnitario, int quantidade, double desconto, double precoFinal,
+    public UmaVenda(Produto produto, double precoUnitario, int quantidade, double desconto, double precoFinal,
             LocalDateTime dataHora) {
-        this.codigoProduto = codigoProduto;
+        this.produto = produto;
         this.precoUnitario = precoUnitario;
         this.quantidade = quantidade;
         this.desconto = desconto;
@@ -22,8 +22,8 @@ public class UmaVenda{
         this.dataHora = dataHora;
     }
 
-    public int getCodigoProduto() {
-        return codigoProduto;
+    public Produto getProduto() {
+        return produto;
     }
 
     public double getPrecoUnitario() {
@@ -48,7 +48,7 @@ public class UmaVenda{
 
     @Override
     public String toString() {
-        return "[Codigo=" + codigoProduto + ", PrecoUnitario=" + precoUnitario + ", Qtdade="
+        return "[Codigo=" + produto.getCodigo() + ", PrecoUnitario=" + precoUnitario + ", Qtdade="
                 + quantidade + ", Desconto=" + desconto + ", PrecoFinal=" + precoFinal + ", DataHora=" + dataHora.format(dateformatter) + "]";
     }
 }

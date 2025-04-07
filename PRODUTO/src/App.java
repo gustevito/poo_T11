@@ -2,66 +2,50 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        LeitorVendas lv = new LeitorVendas();
-        LeitorProdutos lp = new LeitorProdutos();
+    private static final String CAMINHO_ARQUIVO_PRODUTOS = "produtos.txt";
+    private static final String CAMINHO_ARQUIVO_VENDAS = "vendas.txt";
 
-        UmaVenda[] vendas = lv.carregaVendas("vendas.txt");
-        Produto[] produtos = lp.carregaProdutos("produtos.txt");
+    public static void main(String[] args) {
+        // Carrega o arquivo de produtos 
+        Produto[] produtos = LeitorProdutos.carregaProdutos(CAMINHO_ARQUIVO_PRODUTOS);
+        // Carrega o arquivo de vendas
+        UmaVenda[] vendas = LeitorVendas.carregaVendas(CAMINHO_ARQUIVO_VENDAS,produtos);
+        // Coleta estatísticas
+        ColetorEstatisticasProdutos estatisticas = new ColetorEstatisticasProdutos();
+        estatisticas.coleta(produtos,vendas);
+        // Exibe estatisticas
+        NumberFormat formatoMonetarioBR = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+        NumberFormat formatoInteiroBR = NumberFormat.getNumberInstance(Locale.of("pt", "BR"));
 
-        // vendas
-        System.out.println("-------------------------------");
-        System.out.println("Qtd. de registros de produtos: " + vendas.length);
-        int somaVendas = 0;
-        int itensVendidos = 0;
-        for (int i = 0; i < vendas.length; i++) {
-            somaVendas += vendas[i].getPrecoFinal();
-            itensVendidos += vendas[i].getPrecoFinal();
+        // Entrega 1
+        System.out.println("Estatísticas de vendas");
+        System.out.println("Tamanho do catalogo de produtos: "+formatoInteiroBR.format(estatisticas.getQtdadeProdutos()));
+        System.out.println("Quantidade de operações de venda: "+formatoInteiroBR.format(estatisticas.getQtdadeOperacoesVenda()));
+        System.out.println("Valor total vendido: "+formatoMonetarioBR.format(estatisticas.getValorTotalVendido()));
+        System.out.println("Quantidade de itens vendidos: "+formatoInteiroBR.format(estatisticas.getQuantidadeDeItensVendidos()));
+        
+        // Entrega 2
+        System.out.println("Estatisticas por produto: (unidades vendidas/valor total)");
+        for(ProdutoEstatistica prodEst:estatisticas.getEstatisticaProdutos()){
+            System.out.print("    Codigo: "+prodEst.getProduto().getCodigo());
+            System.out.print(", Descricao: "+prodEst.getProduto().getDescricao());
+            System.out.print(" ("+formatoInteiroBR.format(prodEst.getUnidadesVendidas()));
+            System.out.println("/"+formatoMonetarioBR.format(prodEst.getValorTotalVendido())+")");
+        } 
+        
+        // Entrega 3
+        ProdutoEstatistica maisVendido = estatisticas.getProdutoMaisVendido();
+        System.out.print("Produto mais vendido: "+maisVendido.getProduto().getCodigo());  
+        System.out.println(", "+maisVendido.getProduto().getDescricao());
+        ProdutoEstatistica menosVendido = estatisticas.getProdutoMenosVendido();
+        System.out.print("Produto menos vendido: "+menosVendido.getProduto().getCodigo());  
+        System.out.println(", "+menosVendido.getProduto().getDescricao());
+        
+        // Entrega 4
+        System.out.println("Produtos mais vendidos:");
+        for(ProdutoEstatistica prodEst:estatisticas.getMaisVendidos()){
+            System.out.print("    "+prodEst.getProduto().getCodigo());
+            System.out.println(", "+prodEst.getProduto().getDescricao());
         }
-
-        NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
-        String somatorioFormatado = formatoMoeda.format(somaVendas);
-
-        System.out.println("-------------------------------"); // PARTE 1: somatorio + total
-
-        System.out.println("Soma total das vendas: " + somatorioFormatado);
-        System.out.println("Total de itens vendidos: " + itensVendidos);
-
-        System.out.println("-------------------------------"); // PARTE 2: total de unidades + valor total de cada produto
-                                                               
-        // contador para saber a quantidade de produtos vendidos
-        int[] contadores = new int[produtos.length];
-        float[] totaisVendidos = new float[produtos.length];
-        for (int i = 0; i < vendas.length; i++) {
-            int codProduto = vendas[i].getCodigoProduto();
-            contadores[codProduto] += vendas[i].getQuantidade();
-            totaisVendidos[codProduto] += vendas[i].getPrecoFinal();
-        }
-
-        int maior = Integer.MIN_VALUE;
-        int menor = Integer.MAX_VALUE;
-        int produtoMenorUni = 0;
-        int produtoMaiorUni = 0;
-        for(int i = 0; i < produtos.length; i++){
-            if (maior < contadores[i]){
-
-                produtoMaiorUni = i;
-            }
-        }
-
-        for(int i = 0; i < produtos.length; i++){
-            if (menor > contadores[i]){
-                produtoMenorUni = i;
-            }
-        }
-
-        System.out.println("Produto que mais vendeu: " + );
-
-        for (int i = 0; i < produtos.length; i++) {
-            System.out.println(
-                    produtos[i].toString() + "(Qtd.: " + contadores[i] + " / Total: " + "R$" + totaisVendidos[i] + ")");
-        }
-        System.out.println("-------------------------------");
-
     }
 }

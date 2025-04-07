@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class LeitorVendas {
     public static final int MAX_VENDAS = 100000; // carrega arquivos de até 100.000 linhas
 
-    public static UmaVenda[] carregaVendas(String caminhoArquivoVendas){
+    public static UmaVenda[] carregaVendas(String caminhoArquivoVendas,Produto[] produtos){
         UmaVenda[] vendas = new UmaVenda[MAX_VENDAS]; 
         int totalLinhas = 0;
 
@@ -33,7 +33,12 @@ public class LeitorVendas {
                 LocalDateTime dataHora = LocalDateTime.parse(dataHoraStr, formato);
 
                 // Criando o objeto UmaVenda e armazenando no Array
-                vendas[totalLinhas] = new UmaVenda(codigoProduto, precoUnitario, quantidade, desconto, precoFinal,dataHora);
+                if (codigoProduto > produtos.length-1){
+                    System.out.println("Código de produto invalido na linha: "+totalLinhas);
+                    continue;
+                }
+                Produto produto = produtos[codigoProduto];
+                vendas[totalLinhas] = new UmaVenda(produto, precoUnitario, quantidade, desconto, precoFinal,dataHora);
 
                 // Atualiza o contador de linhas
                 totalLinhas++;
