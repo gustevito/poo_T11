@@ -1,0 +1,57 @@
+# https://medium.com/@robertdennyson/creating-c4-and-uml-diagrams-using-plantuml-with-vscode-extension-90032a21ec43
+@startuml C4_Elements
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+class Ferramenta{
+    -String : nome
+    --    
+    +void usar()
+}
+
+class Objeto{
+    -String nome
+    -String descricaoAntesAcao
+    -String descricaoDepoisAcao
+    -Boolean acaoOk
+    --
+    +String descricao()
+    +void usar()
+}
+
+class Sala{
+    -String nome
+	-Map objetos
+	-Map ferramentas
+	-Map portas
+	-Engine engine
+    --
+    +void pega()
+    +void sai()
+    +void usar()
+}
+class Engine{
+    -Mochila mochila
+	-Sala salaCorrente
+	-Boolean fim
+    --
+    +void indicaFimDeJogo()
+    +void criaCenario()
+    +void joga()
+}
+
+Sala --> Ferramenta
+Sala --> Objeto
+Sala --> Sala
+Engine --> Sala
+
+
+Objeto <|-- Armario 
+Objeto <|-- Bilhete
+Objeto <|-- PoteDeAcucar
+Objeto <|-- PoteDeArroz
+
+Ferramenta <|-- Chave
+Ferramenta <|-- Martelo
+
+Engine <|-- Jogodemo
+@enduml
